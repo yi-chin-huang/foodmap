@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath bentomap.wsgi
+web: gunicorn bentomap.wsgi
