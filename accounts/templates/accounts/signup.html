@@ -30,36 +30,26 @@
 	    </div>
 	  </div>
 	</nav>
-	<header id="header">
-	  <div class="intro">
-	    <div class="overlay">
-	      <div class="container">
-	        <div class="row">
-	          <div class="col-md-8 col-md-offset-2 intro-text">
-	          	<div class="brandname">剩食地圖</div>
-	            <h2>NTU<br>Remaining Food<br>Map</h2>
-	            <p class="scroll-leading">Start</p>
-	            <i class="fa fa-angle-double-down"></i>
-	            <!-- <a href="#features" class="btn btn-custom btn-lg page-scroll">Learn More</a> </div> -->
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</header>
 	<section id="map-section" class="text-center">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10 col-md-offset-1 map-display">
-					<img src="{% static 'img/map-demo.png' %}" class="img-responsive" alt="">
-				</div>
-				<div class="col-md-4 col-md-offset-4">
-					<p>你有多的食物嗎?<br>把美味分享給需要的人</p>
-					<form action="">
-						<input type="text" value="地點"></input>
-						<input type="text" value="物資"></input>
-						<input type="submit" value="送出"></input>
-					</form>
-				</div>
+				<form method="post">
+			        {% csrf_token %}
+			        {{ form.as_p }}
+			        <button type="submit">Sign up</button>
+		        </form>
+		        {% if user.is_authenticated %}
+			        <center>
+			            <p style="font-size:13pt">Hi {{ user.username }}!
+			            <button onclick="location.href='account/logout'">Logout</button>
+			            </p>
+			        </center>
+			    {% else %}
+			        <center>
+			        <p style="font-size:13pt">You are not logged in.
+			            <button onclick="location.href='/account/login'">Login</button></p>
+			        </center>
+			    {% endif %}
 			</div>
 		</div>
 	</section>
