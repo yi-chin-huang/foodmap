@@ -78,17 +78,31 @@ WSGI_APPLICATION = 'bentomap.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
+DATABASE_URL = 'postgresql:///postgis_test'
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "bentomap",
-        "USER": "ctps930080",
-        "PASSWORD": "212",
-        "HOST": "",
-        "PORT": "",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgis_test',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(default=DATABASE_URL),
+}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": "bentomap",
+#         "USER": "ctps930080",
+#         "PASSWORD": "212",
+#         "HOST": "",
+#         "PORT": "",
+#     }
+# }
 
 # DATABASES = {
 #     'default': {

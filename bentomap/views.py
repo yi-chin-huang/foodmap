@@ -15,8 +15,9 @@ def home(request):
 		description = request.POST['food_description']
 		amount = request.POST['food_amount']
 		time = datetime.now()
-
-		FoodEvent.objects.create(place=place, resource=resource, amount= amount, description=description, time=time)
+		lon = request.POST['lon']
+		lat = request.POST['lat']
+		FoodEvent.objects.create(place=place, resource=resource, amount= amount, description=description, time=time,lon=lon,lat=lat)
 		
 	return render(request, 'home.html', locals())
 
@@ -31,4 +32,17 @@ def food(request):
 	return render(request, 'food.html', locals())
 
 def index(request):
-	return render(request, 'index.html')
+    # from haversine import haversine
+    points_all = FoodEvent.objects.all()
+    points = []
+    points.extend(points_all)
+    # result_list = []
+    # # your_location = (YOUR_LATITUDE,YOUR_LONGITUDE)
+    # for point in all_points:
+    #     point_loc = (FoodEvent.lat,FoodEvent.lon)
+    #     if(haversine(you,point_loc)<1):
+    #         #print point
+    #         result_list.append(point)
+    # custom_list = [rec.id for rec in result_list]
+    # points = FoodEvent.objects.filter(id__in=custom_list)
+    return render(request,"index.html",{'points':points})

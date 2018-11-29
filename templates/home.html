@@ -66,7 +66,7 @@
 	  </div>
 	</header>
 
-	<div id="map"></div>	
+	<div id="map"></div>
 	<section id="map-section" class="text-center">
 		<div class="container">
 			<div class="row">
@@ -79,6 +79,7 @@
 
 				<!-- Yi_chin modified -->
 				<div class="col-md-4 col-md-offset-4">
+				<div id = 'form'>
 					<form action="" method="post" class = "create_food_event">
 						{% csrf_token %}	
 							<p>你有多的食物嗎?<br>把美味分享給需要的人</p>
@@ -94,25 +95,99 @@
 							<!-- <label for="description">敘述：&nbsp &nbsp</label> -->
 							<input id = "description" type="text" name = "food_description" value="敘述"></input>
 
+							<input id = "lon" type="number" name = "lon" value="經度"></input>
+
+							<input id = "lat" type="number" name = "lat" value="緯度"></input>
+
 							<input type="submit" name = "create_event" value="送出"></input>
 
 						</tabel>
 					</form>
 				</div>
+				</div>
 			</div>
 		</div>
 	</section>
 	<script>
-	  var map;
-	  function initMap() {
-	    map = new google.maps.Map(document.getElementById('map'), {
-	      center: {lat: 25.017364, lng:  121.539695},
-	      zoom: 15
-	    });
-	  }
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap"
-	async defer></script>
+      var map;
+      var marker;
+      var infowindow;
+      var messagewindow;
+
+      function initMap() {
+        var california = {lat: 37.4419, lng: -122.1419};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: california,
+          zoom: 13
+        });
+
+        infowindow = new google.maps.InfoWindow({
+          content: document.getElementById('form')
+        });
+
+        messagewindow = new google.maps.InfoWindow({
+          content: document.getElementById('message')
+        });
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map
+          });
+
+
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+
+          google.maps.event.addListener(marker, 'dbclick', function() {
+            messagewindow.open(map, marker);
+          });
+        });
+      }
+
+      function saveData() {
+        var name = escape(document.getElementById('name').value);
+        var address = escape(document.getElementById('address').value);
+        var type = document.getElementById('type').value;
+        var latlng = marker.getPosition();
+        // infowindow.close()
+        // messagewindow.open(map, marker);
+        // var url = 'phpsqlinfo_addrow.php?name=' + name + '&address=' + address +
+        //           '&type=' + type + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
+
+        // downloadUrl(url, function(data, responseCode) {
+
+        //   if (responseCode == 200 && data.length <= 1) {
+        //     infowindow.close();
+        //     messagewindow.open(map, marker);
+        //   }
+        // });
+      }
+
+      // function downloadUrl(url, callback) {
+      //   var request = window.ActiveXObject ?
+      //       new ActiveXObject('Microsoft.XMLHTTP') :
+      //       new XMLHttpRequest;
+
+      //   request.onreadystatechange = function() {
+      //     if (request.readyState == 4) {
+      //       request.onreadystatechange = doNothing;
+      //       callback(request.responseText, request.status);
+      //     }
+      //   };
+
+      //   request.open('GET', url, true);
+      //   request.send(null);
+      // }
+
+      // function doNothing () {
+      // }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap">
+    </script>
 </body>
 
 
