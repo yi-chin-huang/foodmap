@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
+    'easy_maps',
+    'mapwidgets',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,9 +83,25 @@ WSGI_APPLICATION = 'bentomap.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(),
+# }
+
+DATABASE_URL = 'postgresql:///postgis_test'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgis_test',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(),
+    'default': dj_database_url.config(default=DATABASE_URL),
 }
 
 # Password validation
@@ -126,5 +146,18 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "london"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY"
+}
+
 STATIC_URL = '/static/'
 django_heroku.settings(locals())
+GOOGLE_MAPS_API_KEY = 'AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY'
+DJANGOCMS_GOOGLEMAP_API_KEY = 'AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY'
+EASY_MAPS_GOOGLE_MAPS_API_KEY = 'AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY'
