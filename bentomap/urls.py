@@ -26,7 +26,6 @@ urlpatterns = [
     path('food/', views.food, name = 'food'),
     path('index/',views.index),
     path('accounts/',include('accounts.urls')),
-    path('', views.home, name='home'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
