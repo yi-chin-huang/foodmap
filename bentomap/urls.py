@@ -23,4 +23,5 @@ urlpatterns = [
     path('', views.home, name = 'home'),
     path('food/', views.food, name = 'food'),
     path('index/',views.index)
+    path('accounts/',include('accounts.urls')),
 ]
