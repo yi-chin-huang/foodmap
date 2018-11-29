@@ -22,18 +22,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
     path('', views.home, name = 'home'),
     path('food/', views.food, name = 'food'),
-    path('index/',views.index)
-<<<<<<< HEAD
-=======
+    path('index/',views.index),
     path('accounts/',include('accounts.urls')),
-    path('', views.home, name='home'),
->>>>>>> origin/add-accounts-app
-=======
-    path('accounts/',include('accounts.urls')),
->>>>>>> ac47f77013e0839cde85cf98fd96f4eb19dcdcdc
+
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

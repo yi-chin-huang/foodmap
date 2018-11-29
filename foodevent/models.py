@@ -13,9 +13,12 @@ class FoodEvent(models.Model):
 	resource = models.CharField(max_length=64)
 	description = models.CharField(max_length=128)
 	amount = models.IntegerField(default = 0)
+	pai_amount = models.IntegerField(default = 0)
 	time = models.DateTimeField(default=datetime.now, blank=True)
 	lon = models.FloatField(default = 25.017350,blank = True)
 	lat = models.FloatField(default = 121.539794,blank = True)
+	provider = models.CharField(max_length=20, default = "Anonymous provider")
+
 
 
 	def __str__(self):

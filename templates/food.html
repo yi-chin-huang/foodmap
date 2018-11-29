@@ -25,7 +25,7 @@
 	        <li><a href="{% url 'home' %}" class="page-scroll">Home</a></li>
 	        <li><a href="#map-section" class="page-scroll">Map</a></li>
 	        <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
-	        <li><a href="" class="page-scroll">Account</a></li>
+	        <li><a href="/accounts/" class="page-scroll">Account</a></li>
 	        <li><a href="" class="page-scroll">Contact us</a></li>
 	      </ul>
 	    </div>
@@ -35,15 +35,18 @@
 
 	<section id="map-section" class="text-center">
 		<div class="container">
+			<!-- My Event -->
 				<div class="col-md-12">
-
-						<br><br><br>	
-						<p>看看現在有哪些美食</p>
-						<br>
-						
+									
 							
-								<div class="col-md-6">{% for food in foodevents %}
-									<form action="" method="post">
+						<div class="col-md-6">
+							<br><br><br>
+							<!-- <h3> Hi! {{request.user}}</h3>	 -->
+							<p>我提供的食物</p>
+							<br>
+								{% for food in foodevents %}
+								{% if request.user.username == food.provider %}
+								
 									{% csrf_token %}
 									<div class = "events">
 										名稱：{{food.resource}} <br>
@@ -51,23 +54,68 @@
 										敘述：{{food.description}} <br>
 										發布時間：{{food.time}} <br>
 										剩餘數量：{{food.amount}} <br> 
-										<div class="text-center">
+										已排數量：{{food.pai_amount}} <br> 
+										提供者：{{food.provider}} <br> 
 
-
-									</div>
-								</div>
-								
-								<div class="row form-group">
-							        <div class="col-sm-12 text-center">
-							        	<input type = "hidden" name = "amount" value = {{food.amount}}>
-							            <button type="submit" class="btn btn-default" name = "pai" value = {{food.id}} >排</button>
-									</div>
+										</div>
+									
+									<div class="row form-group">
+								        <div class="col-sm-12 text-center">
+											<form action="" method="post">
+											{% csrf_token %}
+												<!-- <input type="hidden" class="btn btn-default" name = "fid" value = {{food.id}} ></input> -->
+												<input id = "edit_amount" type="text" name = "edit_amount" value="修改剩餘數量"></input>
+												<button type="submit" class="btn btn-default" name = "fid" value = {{food.id}} >確認</button>
+											</form><br><br><br>
+								<form action="" method="post">
+									{% csrf_token %}
+								    <button type="submit" class="btn btn-default" name = "finish" value = {{food.id}} >發完了</button>
 								</form>
-								</div>
-							
-				
+										</div>
+									</div>
+								
 
+								{% endif %}
+								{% endfor %}
+
+						</div>
+				
+				<!-- Others' events  -->
+
+
+		
+					<div class="col-md-6">
+						
+						<br><br><br>	
+						<p>看看現在有哪些美食</p>
+						<br>
+						{% for food in foodevents %}
+						<!-- {% if request.user.username != food.provider %} -->
+						<form action="" method="post">
+							{% csrf_token %}
+							<div class = "events">
+								名稱：{{food.resource}} <br>
+								地點：{{food.place}} <br>
+								敘述：{{food.description}} <br>
+								發布時間：{{food.time}} <br>
+								剩餘數量：{{food.amount}} <br> 
+								已排數量：{{food.pai_amount}} <br> 
+								提供者：{{food.provider}} <br> 
+							</div>
+
+								
+							<div class="row form-group">
+								<div class="col-sm-12 text-center">
+									<input type = "hidden" name = "amount" value = {{food.amount}}>
+									<button type="submit" class="btn btn-default" name = "pai" value = {{food.id}} >排</button>
+								</div>
+							</div>
+						</form>
+						<!-- {% endif %} -->
 						{% endfor %}
+					</div>
+				</div>			
+						
 
 		</div>
 	</section>

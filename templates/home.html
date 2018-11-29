@@ -42,17 +42,8 @@
 	      <ul class="nav navbar-nav navbar-right">
 	        <li><a href="{% url 'home' %}" class="page-scroll">Home</a></li>
 	        <li><a href="#map-section" class="page-scroll">Map</a></li>
-<<<<<<< HEAD
 	        <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
-<<<<<<< HEAD
-	        <li><a href="" class="page-scroll">Account</a></li>
-=======
-	        <li><a href="" class="page-scroll">Food Event</a></li>
 	        <li><a href="/accounts/" class="page-scroll">Account</a></li>
->>>>>>> origin/add-accounts-app
-=======
-	        <li><a href="/accounts/" class="page-scroll">Account</a></li>
->>>>>>> ac47f77013e0839cde85cf98fd96f4eb19dcdcdc
 	        <li><a href="" class="page-scroll">Contact us</a></li>
 	      </ul>
 	    </div>
@@ -104,9 +95,9 @@
 							<!-- <label for="description">敘述：&nbsp &nbsp</label> -->
 							<input id = "description" type="text" name = "food_description" value="敘述"></input>
 
-							<input id = "lon" type="number" name = "lon" value="經度"></input>
+							<input id = "lon" type="hidden" name = "lon" value="經度"></input>
 
-							<input id = "lat" type="number" name = "lat" value="緯度"></input>
+							<input id = "lat" type="hidden" name = "lat" value="緯度"></input>
 
 							<input type="submit" name = "create_event" value="送出"></input>
 

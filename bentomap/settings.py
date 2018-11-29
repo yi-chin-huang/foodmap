@@ -38,18 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'foodevent',
     'accounts',
     'django.contrib.gis',
-<<<<<<< HEAD
     # 'easy_maps',
     'mapwidgets',
-=======
-    'accounts',
->>>>>>> origin/add-accounts-app
-=======
->>>>>>> ac47f77013e0839cde85cf98fd96f4eb19dcdcdc
 ]
 
 
@@ -101,16 +94,16 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(default=DATABASE_URL),
 }
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": "bentomap",
-#         "USER": "ctps930080",
-#         "PASSWORD": "212",
-#         "HOST": "",
-#         "PORT": "",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "bentomap",
+        "USER": "ctps930080",
+        "PASSWORD": "212",
+        "HOST": "",
+        "PORT": "",
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -118,23 +111,33 @@ DATABASES = {
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-<<<<<<< HEAD
 # import dj_database_url
 # DATABASES = {
 #     'default': dj_database_url.config(),
 # }
-=======
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bentomap',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
->>>>>>> origin/add-accounts-app
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'bentomap',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'bentomap',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
