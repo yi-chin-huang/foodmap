@@ -4,14 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
     <title>剩食地圖</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css" />
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=SAMPLE_KEY&callback=initMap">
-</script>
+
+
 </head>
 <body>
+	<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+      	top: 20px;
+        height: 70%;
+        width: 70%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
 	<!-- Navigation-->
   <nav id="menu" class="navbar navbar-default navbar-fixed-top">
 	  <div class="container"> 
@@ -48,56 +65,14 @@
 	    </div>
 	  </div>
 	</header>
-	
 
+	<div id="map"></div>	
 	<section id="map-section" class="text-center">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 map-display">
+
 					<img src="{% static 'img/map-demo.png' %}" class="img-responsive" alt="">
-				
-				<div>
-				   <script>
-				      var map;
-				      function initMap() {
-				        map = new google.maps.Map(document.getElementById('map'), {
-				          center: {lat: -34.397, lng: 150.644},
-				          zoom: 8
-				        });
-				      }
-				      initMap();
-				    </script>
-				    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu0gr5kGkWp4CuG7ReOJLu7cwtUQWh5R8&callback=initMap"
-				    async defer></script>
-
-				    <form method="POST" action="">
-    {% csrf_token %}
-    {{form.media}}
-    {{form.as_p}}
-</form>
-
-{% block extrahead %}
-    {{ form.media }}
-
-    <script type="text/javascript">
-        $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
-            console.log(locationInputElem); // django widget textarea widget (hidden)
-            console.log(lat, lng); // created marker coordinates
-            console.log(mapWrapID); // map widget wrapper element ID
-        });
-        $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
-            console.log(locationInputElem); // django widget textarea widget (hidden)
-            console.log(lat, lng);  // changed marker coordinates
-            console.log(mapWrapID); // map widget wrapper element ID
-        });
-        $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
-            console.log(locationInputElem); // django widget textarea widget (hidden)
-            console.log(lat, lng);  // deleted marker coordinates
-            console.log(mapWrapID); // map widget wrapper element ID
-        })
-    </script>
-{% endblock extrahead %}
-
 
 				</div>
 
@@ -127,6 +102,17 @@
 			</div>
 		</div>
 	</section>
+	<script>
+	  var map;
+	  function initMap() {
+	    map = new google.maps.Map(document.getElementById('map'), {
+	      center: {lat: 25.017364, lng:  121.539695},
+	      zoom: 15
+	    });
+	  }
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap"
+	async defer></script>
 </body>
 
 

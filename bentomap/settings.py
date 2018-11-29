@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodevent',
+    'django.contrib.gis',
+    # 'easy_maps',
     'mapwidgets',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,8 +144,19 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "london"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY"
+}
+
 STATIC_URL = '/static/'
 django_heroku.settings(locals())
+
 
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
@@ -152,5 +166,6 @@ MAP_WIDGETS = {
     "GOOGLE_MAP_API_KEY": "AIzaSyDu0gr5kGkWp4CuG7ReOJLu7cwtUQWh5R8"
 }
 
-GOOGLE_MAPS_API_KEY = 'AIzaSyDu0gr5kGkWp4CuG7ReOJLu7cwtUQWh5R8'
-# GDAL_LIBRARY_PATH = '/Users/ctps930080/Documents/bentomap/gdal-1.11.2/'
+GOOGLE_MAPS_API_KEY = 'AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY'
+DJANGOCMS_GOOGLEMAP_API_KEY = 'AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY'
+EASY_MAPS_GOOGLE_MAPS_API_KEY = 'AIzaSyDdhkb3MKHiXGWbetkt4M0ufjMAYtFw1jY'

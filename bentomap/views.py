@@ -8,6 +8,7 @@ from foodevent.models import FoodEvent
 
 
 def home(request):
+
 	if "create_event" in request.POST:
 		place = request.POST['food_place']
 		resource = request.POST['food_object']
@@ -28,3 +29,6 @@ def food(request):
 		FoodEvent.objects.filter(id = foodid).update(amount = foodamount - 1)
 
 	return render(request, 'food.html', locals())
+
+def index(request):
+	return render(request, 'index.html')

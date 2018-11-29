@@ -19,15 +19,15 @@ class FoodEvent(models.Model):
 	def __str__(self):
 		return self.place + " " + self.resource
 
-class Rental(models.Model):
-    address = map_fields.AddressField(max_length=200)
-    geolocation = map_fields.GeoLocationField(max_length=100)
+# class Rental(models.Model):
+#     address = map_fields.AddressField(max_length=200)
+#     geolocation = map_fields.GeoLocationField(max_length=100)
 
-class RentalAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        map_fields.AddressField: {
-          'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'})},
-    }
+# class RentalAdmin(admin.ModelAdmin):
+#     formfield_overrides = {
+#         map_fields.AddressField: {
+#           'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'})},
+#     }
 
 
 
