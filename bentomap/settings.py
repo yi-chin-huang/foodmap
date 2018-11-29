@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'foodevent',
     'accounts',
-    'django.contrib.gis',
+    # 'django.contrib.gis',
     # 'easy_maps',
     # 'mapwidgets',
 ]
