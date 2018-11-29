@@ -39,9 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodevent',
+    'accounts',
     'django.contrib.gis',
-    # 'easy_maps',
-    'mapwidgets',
 ]
 
 
