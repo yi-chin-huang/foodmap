@@ -14,6 +14,8 @@ class FoodEvent(models.Model):
 	description = models.CharField(max_length=128)
 	amount = models.IntegerField(default = 0)
 	time = models.DateTimeField(default=datetime.now, blank=True)
+	lon = models.FloatField(default = 25.017350,blank = True)
+	lat = models.FloatField(default = 121.539794,blank = True)
 
 
 	def __str__(self):

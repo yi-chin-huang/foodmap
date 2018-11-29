@@ -26,10 +26,14 @@ urlpatterns = [
     path('', views.home, name = 'home'),
     path('food/', views.food, name = 'food'),
     path('index/',views.index)
+<<<<<<< HEAD
 =======
     path('accounts/',include('accounts.urls')),
     path('', views.home, name='home'),
 >>>>>>> origin/add-accounts-app
+=======
+    path('accounts/',include('accounts.urls')),
+>>>>>>> ac47f77013e0839cde85cf98fd96f4eb19dcdcdc
 ]
 
 urlpatterns += staticfiles_urlpatterns()

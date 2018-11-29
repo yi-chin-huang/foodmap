@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html >
+{% load  staticfiles %}
   <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>From Info Windows to a Database: Saving User-Added Form Data</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -12,26 +12,47 @@
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
-      	top: 20px;
-        height: 70%;
-        width: 70%;
+        height: 100%;
         margin: 0;
         padding: 0;
       }
     </style>
   </head>
   <body>
-    <div id="map"></div>
+    <div id="map" height="460px" width="100%"></div>
     <script>
       var map;
+      var marker;
+      var infowindow;
+      var messagewindow;
+
       function initMap() {
+        var ntu = {lat: 25.017341, lng: 121.539794};
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 25.017364, lng:  121.539695},
-          zoom: 15
+          center: ntu,
+          zoom: 13
         });
+        {% for point in points %}
+          //console.log({{ point.lat }}, {{ point.lon }});
+          // var myLatLng = new google.maps.LatLng({{ FoodEvent.lat }}, {{ FoodEvent.lon }});
+
+          marker = new google.maps.Marker({
+              position: { lat: {{ point.lat}}, lng: {{point.lon}} },
+              map: map,
+              title: '{{ point.place }}',
+              url: '/{{point.resource}}',
+          });
+          // google.maps.event.addListener(marker, 'click', function() {
+          //     console.log("here");
+          //     window.location.href = this.url;
+          // });
+      {% endfor %}
       }
+      
+
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap"
-    async defer></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap">
+    </script>
   </body>
 </html>
