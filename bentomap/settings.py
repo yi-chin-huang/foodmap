@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'django.contrib.gis',
     # 'easy_maps',
-    'mapwidgets',
+    # 'mapwidgets',
 ]
 
 
