@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+{% load  staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>剩食地圖</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/style_food.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css" />
+    
+</head>
+<body>
+	<!-- Navigation-->
+  <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+	  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <a class="navbar-brand page-scroll" href="">NTU<br>Remaining Food<br>Map</a>
+			</div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="{% url 'home' %}" class="page-scroll">Home</a></li>
+	        <li><a href="#map-section" class="page-scroll">Map</a></li>
+	        <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
+	        <li><a href="" class="page-scroll">Account</a></li>
+	        <li><a href="" class="page-scroll">Contact us</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+	
+
+	<section id="map-section" class="text-center">
+		<div class="container">
+				<div class="col-md-12">
+
+						<br><br><br>	
+						<p>看看現在有哪些美食</p>
+						<br>
+						
+							
+								<div class="col-md-6">{% for food in foodevents %}
+									<form action="" method="post">
+									{% csrf_token %}
+									<div class = "events">
+										名稱：{{food.resource}} <br>
+										地點：{{food.place}} <br>
+										敘述：{{food.description}} <br>
+										發布時間：{{food.time}} <br>
+										剩餘數量：{{food.amount}} <br> 
+										<div class="text-center">
+
+
+									</div>
+								</div>
+								
+								<div class="row form-group">
+							        <div class="col-sm-12 text-center">
+							        	<input type = "hidden" name = "amount" value = {{food.amount}}>
+							            <button type="submit" class="btn btn-default" name = "pai" value = {{food.id}} >排</button>
+									</div>
+								</form>
+								</div>
+							
+				
+
+						{% endfor %}
+
+		</div>
+	</section>
+</body>
+
+
+
+</html>
+        	

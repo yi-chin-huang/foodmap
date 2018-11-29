@@ -225,7 +225,7 @@ header .intro-text {
   text-align: center;
 }
 header .brandname{
-  height: 150px;
+    height: 150px;
     width: 150px;
     border: solid 5px;
     font-size: 50px;
@@ -256,6 +256,17 @@ header .brandname{
 #map-section input{
 	display: block;
 	margin: 10px;
+}
+.create_food_event label, input{
+  display: inline;
+  
+}
+
+
+
+.create_food_event input{
+  vertical-align: middle
+
 }
 
 

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'foodevent',
+    'mapwidgets',
 ]
 
 MIDDLEWARE = [
@@ -73,16 +76,27 @@ WSGI_APPLICATION = 'bentomap.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "bentomap",
+        "USER": "ctps930080",
+        "PASSWORD": "212",
+        "HOST": "",
+        "PORT": "",
+    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(),
-}
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(),
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -108,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -116,6 +130,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+TIME_ZONE = 'Asia/Taipei'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -128,3 +143,14 @@ else:
 
 STATIC_URL = '/static/'
 django_heroku.settings(locals())
+
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [57.7177013, -16.6300491]),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyDu0gr5kGkWp4CuG7ReOJLu7cwtUQWh5R8"
+}
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyDu0gr5kGkWp4CuG7ReOJLu7cwtUQWh5R8'
+# GDAL_LIBRARY_PATH = '/Users/ctps930080/Documents/bentomap/gdal-1.11.2/'
