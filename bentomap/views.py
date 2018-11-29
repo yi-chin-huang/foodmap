@@ -23,7 +23,7 @@ def home(request):
 		FoodEvent.objects.create(place=place, resource=resource, amount= amount, pai_amount = pai_amount, description=description, time=time, provider = provider)
 		
 	return render(request, 'home.html', locals())
-@login_required
+# @login_required
 def food(request):
 	foodevents = FoodEvent.objects.all().order_by('id')
 	print(request.POST)
@@ -44,7 +44,7 @@ def food(request):
 
 
 	return render(request, 'food.html', locals())
-@login_required
+# @login_required
 def index(request):
     # from haversine import haversine
     points_all = FoodEvent.objects.all()
