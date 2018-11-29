@@ -3,10 +3,6 @@ from django.utils.timezone import now
 from datetime import datetime
 
 from django.contrib import admin
-from django_google_maps import widgets as map_widgets
-from django_google_maps import fields as map_fields
-
-from mapwidgets.widgets import GooglePointFieldWidget, GoogleStaticOverlayMapWidget
 
 class FoodEvent(models.Model):
 	place = models.CharField(max_length=64)
