@@ -29,7 +29,8 @@ def food(request):
 	print(request.POST)
 	if "pai" in request.POST:
 		foodid = request.POST['pai']
-		foodamount = int(request.POST['amount'])
+		food = FoodEvent.objects.get(id = foodid)
+		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
 	if "finish" in request.POST:
 		foodid = request.POST['finish']
