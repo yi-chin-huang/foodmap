@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils.timezone import now
 from datetime import datetime
-
-# from django.contrib import admin
+from django.contrib.auth.models import User
+from django.contrib import admin
+from django.conf import settings
 
 class FoodEvent(models.Model):
 	place = models.CharField(max_length=64)
@@ -13,9 +14,7 @@ class FoodEvent(models.Model):
 	time = models.DateTimeField(default=datetime.now, blank=True)
 	lon = models.FloatField(default = 25.017350,blank = True)
 	lat = models.FloatField(default = 121.539794,blank = True)
-	provider = models.CharField(max_length=20, default = "Anonymous provider")
-
-
+	provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank = False, related_name = "provider")
 
 	def __str__(self):
 		return self.place + " " + self.resource
@@ -23,25 +22,15 @@ class Place(models.Model):
 	name = models.CharField(max_length=64)
 	lon = models.FloatField(default = 25.017350,blank = True)
 	lat = models.FloatField(default = 121.539794,blank = True)
-# class Rental(models.Model):
-#     address = map_fields.AddressField(max_length=200)
-#     geolocation = map_fields.GeoLocationField(max_length=100)
-
-# class RentalAdmin(admin.ModelAdmin):
-#     formfield_overrides = {
-#         map_fields.AddressField: {
-#           'widget': map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'})},
-#     }
 
 
+class TakeFood(models.Model):
+	taker = models.ForeignKey(User, on_delete=models.CASCADE, blank = False)
+	food = models.ForeignKey(FoodEvent, on_delete=models.CASCADE,default=1)
+	exp_time = models.DateTimeField(default=datetime.now, blank=True)
+	rating = models.IntegerField(default = 0) # late: -1 points per 5 mins
 
+	def __str__(self):
+		return self.taker + "will take "+ self.food + " at " + self.time
 
-# class CityForm(forms.ModelForm):
-
-#     class Meta:
-#         model = City
-#         fields = ("coordinates", "city_hall")
-#         widgets = {
-#             'coordinates': GooglePointFieldWidget,
-#             'city_hall': GoogleStaticOverlayMapWidget,
-#         }
+ 

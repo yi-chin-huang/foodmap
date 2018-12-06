@@ -3,8 +3,13 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from datetime import datetime
 from foodevent.models import FoodEvent, Place
+=======
+from datetime import datetime, timedelta
+from foodevent.models import FoodEvent, TakeFood
+>>>>>>> f9cbe608959a9ac6bfdeda92c84aad1535e9e67d
 from django.contrib.auth.decorators import login_required
 import math
 
@@ -46,11 +51,16 @@ def food(request):
 		foodevents = [x for _,x in sorted(zip(dist,unsort_foodevents))]
 	else:
 		foodevents = FoodEvent.objects.all().order_by('id')
+		
 	if "pai" in request.POST:
+		taker = request.user
 		foodid = request.POST['pai']
 		food = FoodEvent.objects.get(id = foodid)
 		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
+		exp_time = datetime.now() + timedelta(minutes = int(request.POST['expected_time']))
+		TakeFood.objects.create(taker = taker, food = food, exp_time = exp_time)
+
 	if "finish" in request.POST:
 		foodid = request.POST['finish']
 		FoodEvent.objects.filter(id = foodid).delete()
@@ -60,6 +70,7 @@ def food(request):
 		FoodEvent.objects.filter(id = fid).update(amount = new_amount)
 
 	return render(request, 'food.html', locals())
+
 # @login_required
 def index(request):
     # from haversine import haversine

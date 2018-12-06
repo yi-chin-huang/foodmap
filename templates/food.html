@@ -58,7 +58,7 @@
 							<p>我提供的食物</p>
 							<br>
 								{% for food in foodevents %}
-								{% if request.user.username == food.provider %}
+								{% if request.user.username == food.provider.username %}
 								
 									{% csrf_token %}
 									<div class = "events">
@@ -70,7 +70,7 @@
 										已排數量：{{food.pai_amount}} <br>  
 										提供者：{{food.provider}} <br> 
 
-										</div>
+									</div>
 									
 									<div class="row form-group">
 								        <div class="col-sm-12 text-center">
@@ -80,10 +80,26 @@
 												<input id = "edit_amount" type="text" name = "edit_amount" value="修改剩餘數量"></input>
 												<button type="submit" class="btn btn-default" name = "fid" value = {{food.id}} >確認</button>
 											</form><br><br><br>
-								<form action="" method="post">
-									{% csrf_token %}
-								    <button type="submit" class="btn btn-default" name = "finish" value = {{food.id}} >發完了</button>
-								</form>
+											<h3>排隊情形：</h3><br>
+											{% for tkf in take_food %}
+											{% if tkf.food.id == food.id %}
+											
+
+											<div class = "take_food_info">
+												
+												排隊者：{{tkf.taker.username}}<br>
+												預計抵達時間：{{tkf.exp_time}}<br>
+												
+											</div><br>
+
+											{% endif %}
+											{% endfor %}
+											<div class = "finish">
+												<form action="" method="post">
+													{% csrf_token %}
+												    <button type="submit" class="btn btn-default" name = "finish" value = {{food.id}} >發完了</button>
+												</form>
+											</div>
 										</div>
 									</div>
 								
@@ -103,7 +119,7 @@
 						<p>看看現在有哪些美食</p>
 						<br>
 						{% for food in foodevents %}
-						<!-- {% if request.user.username != food.provider %} -->
+						<!-- {% if request.user.username != food.provider.username %} -->
 						<form action="" method="post">
 							{% csrf_token %}
 							<div class = "events">
@@ -120,7 +136,8 @@
 								
 							<div class="row form-group">
 								<div class="col-sm-12 text-center">
-									<!-- <input type = "hidden" name = "amount" value = {{food.amount}}> -->
+									<label for="exp_time">預計幾分鐘後領取：</label> 
+									<input id = "exp_time" type="text" name = "expected_time" value="ex: 20"></input>
 									<button type="submit" class="btn btn-default" name = "pai" value = {{food.id}} >排</button>
 								</div>
 							</div>
