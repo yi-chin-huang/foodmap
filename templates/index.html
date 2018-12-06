@@ -31,13 +31,12 @@
         map = new google.maps.Map(document.getElementById('map'), {
           center: ntu,
           zoom: 13
-        });
         {% for point in points %}
           //console.log({{ point.lat }}, {{ point.lon }});
-          // var myLatLng = new google.maps.LatLng({{ FoodEvent.lat }}, {{ FoodEvent.lon }});
+          var myLatLng = new google.maps.LatLng({{% point.lat %}},{{% point.lon %}});
 
           marker = new google.maps.Marker({
-              position: { lat: {{ point.lat}}, lng: {{point.lon}} },
+              position: { lat: , lng:  },
               map: map,
               title: '{{ point.place }}',
               url: '/{{point.resource}}',

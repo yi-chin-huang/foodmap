@@ -22,16 +22,15 @@ def login_view(request):
             # log in the user
             user = form.get_user()
             login(request,user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
-        if "logout" in request.POST:
-                logout(request)
-                return redirect('home')
+            return redirect('//')
+            # if 'next' in request.POST:
+            #     return redirect(request.POST.get('next'))
+        else:
+            return redirect('../accounts/signup/')
     else:
         form = AuthenticationForm()
     return render(request,'accounts/login.html',{'form':form})
 
 def logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('home')
+    auth.logout(request)
+    return redirect('../')

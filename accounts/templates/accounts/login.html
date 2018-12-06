@@ -32,11 +32,10 @@
 	</nav>
 	<section id="map-section" class="text-center">
 		<div class="container">
-			<div class="row">
 				<h1>Login</h1>
 				  <form class="site-form" action="{% url 'accounts:login' %}" method="post">
 				  	{% csrf_token %}
-				  	{{ form }}
+				  		{{ form }}
 				  	{% if request.GET.next %}
 					  	<input type="hidden" name="next" value="{{request.GET.next}}">
 				  	{% endif %}
@@ -51,7 +50,6 @@
 				  <div class="signup-btn">
 				  	<button onclick="location.href='{% url "accounts:signup" %}'" type="button">Create An Account</button>
 				  </div>
-			</div>
 		</div>
 	</section>
 </body>

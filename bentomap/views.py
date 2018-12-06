@@ -25,6 +25,7 @@ def home(request):
 	return render(request, 'home.html', locals())
 
 # @login_required
+
 def food(request):
 	foodevents = FoodEvent.objects.all().order_by('id')
 	take_food = TakeFood.objects.all().order_by('exp_time')
