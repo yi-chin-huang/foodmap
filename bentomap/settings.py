@@ -92,20 +92,6 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(default=DATABASE_URL),
-}
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "foodmap",
-        "USER": "ctps930080",
-        "PASSWORD": "212",
-        "HOST": "",
-        "PORT": "",
-    }
-}
 
 # DATABASES = {
 #     'default': dj_database_url.config(default=DATABASE_URL),

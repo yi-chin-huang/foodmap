@@ -3,13 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from datetime import datetime
-from foodevent.models import FoodEvent, Place
-=======
 from datetime import datetime, timedelta
-from foodevent.models import FoodEvent, TakeFood
->>>>>>> f9cbe608959a9ac6bfdeda92c84aad1535e9e67d
+from foodevent.models import FoodEvent, Place, TakeFood
 from django.contrib.auth.decorators import login_required
 import math
 
