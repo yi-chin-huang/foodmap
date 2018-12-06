@@ -40,7 +40,7 @@ def food(request):
 		myplace = request.POST['myplace']
 		if myplace == "新體":
 			place = Place.objects.create(name=myplace,lon=121.535274,lat=25.021981)
-		elif myplace == "社科"：
+		elif myplace == "社科":
 			place = Place.objects.create(name=myplace,lon=121.542431,lat=25.020963)
 		else:
 			place = Place.objects.create(name=myplace,lon=121.543333,lat=25.020953)
