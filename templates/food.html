@@ -58,7 +58,7 @@
 							<p>我提供的食物</p>
 							<br>
 								{% for food in foodevents %}
-								{% if request.user.username == food.provider.username %}
+									{% if request.user.username == food.provider.username %}	
 								
 									{% csrf_token %}
 									<div class = "events">
@@ -67,7 +67,7 @@
 										敘述：{{food.description}} <br>
 										發布時間：{{food.time}} <br>
 										剩餘數量：{{food.amount}} <br> 
-										已排數量：{{food.pai_amount}} <br>  
+										<!-- 已排數量：{{food.pai_amount}} <br> -->  
 										提供者：{{food.provider}} <br> 
 
 									</div>

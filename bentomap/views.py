@@ -10,7 +10,6 @@ import math
 
 # @login_required
 def home(request):
-
 	if "create_event" in request.POST:
 		place = request.POST['food_place']
 		resource = request.POST['food_object']
@@ -21,10 +20,10 @@ def home(request):
 		lng = request.POST['lng']
 		lat = request.POST['lat']
 		provider = request.user
-		FoodEvent.objects.create(place=place, resource=resource, amount= amount, pai_amount = pai_amount, description=description, time=time, provider = provider,lon=lng,lat=lat)
+		FoodEvent.objects.create(place=place, resource=resource, amount= amount, pai_amount = pai_amount, description=description, time=time, provider=provider,lon=lng,lat=lat)
 		return redirect("/food/")
 	return render(request, 'home.html', locals())
-# @login_required(login_url='/accounts/')
+
 def count_dis(base_lng, base_lat, lng, lat):
 
     lon1, lat1, lon2, lat2 = map(math.radians, [base_lng, base_lat, lng, lat])
@@ -35,18 +34,18 @@ def count_dis(base_lng, base_lat, lng, lat):
     c = 2 * math.asin(math.sqrt(a))
     r = 6371
     return c * r 
+# @login_required(login_url='/accounts/')
 def food(request):
 	if "myplace" in request.POST:
 		myplace = request.POST['myplace']
 		place = Place.objects.get(name=myplace)
-		unsort_foodevents = FoodEvent.objects.all().order_by('id')
+		unsort_foodevents = FoodEvent.objects.all()
 		dist = []
 		for i in unsort_foodevents:
 			dist.append(count_dis(i.lon,i.lat,place.lon,place.lat))
 		foodevents = [x for _,x in sorted(zip(dist,unsort_foodevents))]
 	else:
-		foodevents = FoodEvent.objects.all().order_by('id')
-		
+		foodevents = FoodEvent.objects.all().order_by('id')	
 	if "pai" in request.POST:
 		taker = request.user
 		foodid = request.POST['pai']

@@ -84,7 +84,7 @@ DATABASE_URL = 'postgresql:///postgis_test'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgis_test',
+        'NAME': 'myproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
         'HOST': 'localhost',

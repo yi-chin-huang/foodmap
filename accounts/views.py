@@ -14,7 +14,7 @@ def signup_view(request):
             return redirect('../')
     else:
         form = UserCreationForm()
-    return render(request,'accounts/login.html',{'form':form})
+    return render(request,'accounts/signup.html',{'form':form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -24,10 +24,8 @@ def login_view(request):
             user = form.get_user()
             login(request,user)
             return redirect('../')
-            # if 'next' in request.POST:
-            #     return redirect(request.POST.get('next'))
         else:
-            return render(request,'accounts/signup.html',locals())
+            return redirect("../")
     else:
         form = AuthenticationForm()
     return render(request,'accounts/login.html',{'form':form})
