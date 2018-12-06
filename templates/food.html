@@ -34,6 +34,19 @@
 	
 
 	<section id="map-section" class="text-center">
+	<h2>where are you?</h2>
+	<form action="" method="post">
+	{% csrf_token %}
+		<select name="myplace">
+		  <option value="新體">新體</option>
+		  <option value="管院">管院</option>
+		  <option value="總圖">總圖</option>
+		  <option value="社科">社科</option>
+		</select>
+		<input type="submit" value="Submit">
+	</form>
+	{{place.lon}}
+	{{place.lat}}
 		<div class="container">
 			<!-- My Event -->
 				<div class="col-md-12">
@@ -54,7 +67,7 @@
 										敘述：{{food.description}} <br>
 										發布時間：{{food.time}} <br>
 										剩餘數量：{{food.amount}} <br> 
-										已排數量：{{food.pai_amount}} <br> 
+										已排數量：{{food.pai_amount}} <br>  
 										提供者：{{food.provider}} <br> 
 
 										</div>
@@ -99,6 +112,7 @@
 								敘述：{{food.description}} <br>
 								發布時間：{{food.time}} <br>
 								剩餘數量：{{food.amount}} <br> 
+								經度：{{food.lon}} <br> 
 								已排數量：{{food.pai_amount}} <br> 
 								提供者：{{food.provider}} <br> 
 							</div>

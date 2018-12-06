@@ -11,9 +11,10 @@ def signup_view(request):
             # log the user in
             login(request,user)
             # return redirect('articles:list')
+            return redirect('../')
     else:
         form = UserCreationForm()
-    return render(request,'accounts/signup.html',{'form':form})
+    return render(request,'accounts/login.html',{'form':form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -22,15 +23,15 @@ def login_view(request):
             # log in the user
             user = form.get_user()
             login(request,user)
-            return redirect('//')
+            return redirect('../')
             # if 'next' in request.POST:
             #     return redirect(request.POST.get('next'))
         else:
-            return redirect('../accounts/signup/')
+            return render(request,'accounts/signup.html',locals())
     else:
         form = AuthenticationForm()
     return render(request,'accounts/login.html',{'form':form})
 
 def logout_view(request):
-    auth.logout(request)
+    logout(request)
     return redirect('../')

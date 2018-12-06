@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 from datetime import datetime
 
-from django.contrib import admin
+# from django.contrib import admin
 
 class FoodEvent(models.Model):
 	place = models.CharField(max_length=64)
@@ -19,7 +19,10 @@ class FoodEvent(models.Model):
 
 	def __str__(self):
 		return self.place + " " + self.resource
-
+class Place(models.Model):
+	name = models.CharField(max_length=64)
+	lon = models.FloatField(default = 25.017350,blank = True)
+	lat = models.FloatField(default = 121.539794,blank = True)
 # class Rental(models.Model):
 #     address = map_fields.AddressField(max_length=200)
 #     geolocation = map_fields.GeoLocationField(max_length=100)

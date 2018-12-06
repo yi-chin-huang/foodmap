@@ -95,7 +95,7 @@
 							<!-- <label for="description">敘述：&nbsp &nbsp</label> -->
 							<input id = "description" type="text" name = "food_description" value="敘述"></input>
 
-							<input id = "lon" type="hidden" name = "lon" value="經度"></input>
+							<input id = "lng" type="hidden" name = "lng" value="經度"></input>
 
 							<input id = "lat" type="hidden" name = "lat" value="緯度"></input>
 
@@ -118,7 +118,7 @@
         var california = {lat: 25.018, lng: 121.53};
         map = new google.maps.Map(document.getElementById('map'), {
           center: california,
-          zoom: 13
+          zoom: 16
         });
 
         infowindow = new google.maps.InfoWindow({
@@ -134,6 +134,10 @@
             position: event.latLng,
             map: map
           });
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        document.getElementById("lng").value = lng;
+        document.getElementById("lat").value = lat;
 
 
           google.maps.event.addListener(marker, 'click', function() {
@@ -144,11 +148,9 @@
             messagewindow.open(map, marker);
           });
         });
+
       }
-      var lat = marker.getPosition().lat();
-      var lng = marker.getPosition().lng();
-      document.getElementById("lon").value = lng;
-      document.getElementById("lat").value = lat;
+      
 
     </script>
     <script async defer
