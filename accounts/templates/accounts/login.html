@@ -42,6 +42,12 @@
 				  	{% endif %}
 				  	<input type="submit" value="Login">
 				  </form>
+
+				  <form class="site-form" action="" method="post">
+				  	{% csrf_token %}
+				  		<input type="submit" name="logout" value="Logout">
+				  </form>
+
 				  <div class="signup-btn">
 				  	<button onclick="location.href='{% url "accounts:signup" %}'" type="button">Create An Account</button>
 				  </div>

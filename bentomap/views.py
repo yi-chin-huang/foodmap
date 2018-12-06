@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from datetime import datetime
-from foodevent.models import FoodEvent
+from datetime import datetime, timedelta
+from foodevent.models import FoodEvent, TakeFood
 from django.contrib.auth.decorators import login_required
 
 # @login_required
@@ -19,32 +19,36 @@ def home(request):
 		time = datetime.now()
 		# lon = float(request.POST['lon'])
 		# lat = float(request.POST['lat'])
-		provider = request.user
+		provider = User.objects.get(id = request.user.pk)
 		FoodEvent.objects.create(place=place, resource=resource, amount= amount, pai_amount = pai_amount, description=description, time=time, provider = provider)
 		
 	return render(request, 'home.html', locals())
+
 # @login_required
 def food(request):
 	foodevents = FoodEvent.objects.all().order_by('id')
+	take_food = TakeFood.objects.all().order_by('exp_time')
 	print(request.POST)
 	if "pai" in request.POST:
+		taker = request.user
 		foodid = request.POST['pai']
 		food = FoodEvent.objects.get(id = foodid)
 		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
+		exp_time = datetime.now() + timedelta(minutes = int(request.POST['expected_time']))
+		TakeFood.objects.create(taker = taker, food = food, exp_time = exp_time)
+
 	if "finish" in request.POST:
 		foodid = request.POST['finish']
 		FoodEvent.objects.filter(id = foodid).delete()
-	if "edit_amount" in request.POST:
 
+	if "edit_amount" in request.POST:
 		fid = request.POST['fid']
 		new_amount = request.POST['edit_amount']
 		FoodEvent.objects.filter(id = fid).update(amount = new_amount)
 
-
-
-
 	return render(request, 'food.html', locals())
+
 # @login_required
 def index(request):
     # from haversine import haversine

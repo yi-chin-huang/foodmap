@@ -24,6 +24,9 @@ def login_view(request):
             login(request,user)
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
+        if "logout" in request.POST:
+                logout(request)
+                return redirect('home')
     else:
         form = AuthenticationForm()
     return render(request,'accounts/login.html',{'form':form})

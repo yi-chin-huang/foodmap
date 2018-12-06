@@ -282,3 +282,15 @@ header .brandname{
 form{
   display: inline-block;
 }
+#exp_time{
+  display: inline-block !important;  
+}
+.take_food_info{
+  color: #333333;
+  margin: 0;
+  font-size: 20px; 
+  padding: 0;
+  line-height: 1.8em;
+
+
+}
