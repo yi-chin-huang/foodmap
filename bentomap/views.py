@@ -66,7 +66,7 @@ def food(request):
 		food = FoodEvent.objects.get(id = foodid)
 		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
-		exp_time = datetime.now() + timedelta(minutes = int(request.POST['expected_time']))
+		exp_time = (datetime.now() + timedelta(minutes = int(request.POST['expected_time']))).replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Taipei'))
 		print("pai exptime: ", exp_time)
 		TakeFood.objects.create(taker = taker, food = food, exp_time = exp_time)
 
@@ -80,17 +80,19 @@ def food(request):
 	if "taken_food" in request.POST:
 		taken_foodid = request.POST['taken_food']
 		taken_time = datetime.now().replace(tzinfo=pytz.UTC)
-		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time
+		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time.replace(tzinfo=pytz.UTC)
 		print(taken_time - exp_taken_time)
 		if taken_time <= exp_taken_time:
 			rating = 10
 		# else:
 		# 	rating = taken_time - exp_taken_time.d.Ticks
-		print("now ", taken_time)
-		print("exp ", exp_taken_time)
-		print("delta: ", ((exp_taken_time - taken_time).seconds))
-		print("delta/60: ", ((exp_taken_time - taken_time).seconds)/60)
+		# print("now ", taken_time)
+		# print("exp ", exp_taken_time)
+		# print("delta: ", ((exp_taken_time - taken_time).seconds))
+		# print("delta/60: ", ((exp_taken_time - taken_time).seconds)/60)
 		# print(timedelta(taken_time - exp_taken_time))
+
+		TakeFood.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
 
 
 
