@@ -40,22 +40,25 @@ def food(request):
 	if "myplace" in request.POST:
 		myplace = request.POST['myplace']
 		if myplace == "新體":
-			place = Place.objects.create(name=myplace,lon=121.535274,lat=25.021981)
+			place = Place.objects.create(place=myplace,lon=121.535274,lat=25.021981)
 		elif myplace == "社科":
-			place = Place.objects.create(name=myplace,lon=121.542431,lat=25.020963)
+			place = Place.objects.create(place=myplace,lon=121.542431,lat=25.020963)
+		elif myplace == "管院":
+			place = Place.objects.create(place=myplace,lon=121.543333,lat=25.020953)
 		else:
-			place = Place.objects.create(name=myplace,lon=121.543333,lat=25.020953)
+			place = Place.objects.get(place = myplace)
 		unsort_foodevents = FoodEvent.objects.all()
 		dist = []
 		for i in unsort_foodevents:
 			dist.append(count_dis(i.lon,i.lat,place.lon,place.lat))
 		foodevents = [x for _,x in sorted(zip(dist,unsort_foodevents))]
+		all_place = Place.objects.all()
 	else:
 		foodevents = FoodEvent.objects.all().order_by('id')	
 
 	my_food = FoodEvent.objects.filter(provider = request.user)
 	take_food = TakeFood.objects.filter(food__in = my_food)
-
+	all_place = Place.objects.all()
 	if "pai" in request.POST:
 		taker = request.user
 		foodid = request.POST['pai']
@@ -72,6 +75,11 @@ def food(request):
 		fid = request.POST['fid']
 		new_amount = request.POST['edit_amount']
 		FoodEvent.objects.filter(id = fid).update(amount = new_amount)
+	if "taken_food" in request.POST:
+		taken_foodid = request.POST['taken_food']
+		taken_time = datetime.now()
+		if taken_time
+
 
 	return render(request, 'food.html', locals())
 
@@ -91,3 +99,14 @@ def index(request):
     # custom_list = [rec.id for rec in result_list]
     # points = FoodEvent.objects.filter(id__in=custom_list)
     return render(request,"index.html",{'points':points})
+def place(request):
+	if "create_place" in request.POST:
+		place = request.POST['myplace']
+		lng = request.POST['lng']
+		lat = request.POST['lat']
+		Place.objects.create(place=place,lon=lng,lat=lat)
+		all_place = Place.objects.all()
+	return render(request, 'place.html', locals())
+
+
+

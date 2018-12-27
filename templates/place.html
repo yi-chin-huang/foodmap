@@ -1,11 +1,70 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="col-md-4 col-md-offset-4">
-	<div id = 'form'>
-		<form action="" method="post" class = "create_place">
-    		<input id = "place" type="text" name = "food_place" value="地點"></input>
+<!DOCTYPE html>
+<html lang="zh">
+{% load  staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>剩食地圖</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/style_food.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css" />
+    
+</head>
+<body>
+  <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        top: 20px;
+        height: 70%;
+        width: 70%;
+        margin: 0;
+        padding: 0;
+      }
+  </style>
+  <!-- Navigation-->
+  <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+    <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand page-scroll" href="">NTU<br>Remaining Food<br>Map</a>
+      </div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'home' %}" class="page-scroll">Home</a></li>
+          <li><a href="#map-section" class="page-scroll">Map</a></li>
+          <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
+          <li><a href="/accounts/" class="page-scroll">Account</a></li>
+          <li><a href="" class="page-scroll">Contact us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br><br><br><br><br><br><br>
+  <h1></h1>
+  <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+            	<div id = 'form'>
+            		<form action="" method="post" class = "create_place">
+                  {% csrf_token %}
+                		<input id = "place" type="text" name = "myplace" value="地點"></input>
+                    <input id = "lng" type="hidden" name = "lng" value="經度"></input>
+                    <input id = "lat" type="hidden" name = "lat" value="緯度"></input>
+                    <input type="submit" name = "create_place" value="送出"></input>
+                </form>
+              </div>
+            </div>
+        </div>
+  </div>
+  <div id="map"></div>
 
-{% endblock %}
 <script>
       var map;
       var marker;
@@ -54,3 +113,5 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap">
     </script>
+  </body>
+</html>

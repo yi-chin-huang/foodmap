@@ -38,89 +38,26 @@
 	<form action="" method="post">
 	{% csrf_token %}
 		<select name="myplace">
+		  {% for place in all_place %}
+		  <option value="{{ place.place }}"> {{ place.place }} </option>
+		  {% endfor %}
 		  <option value="新體">新體</option>
 		  <option value="管院">管院</option>
-		  <option value="總圖">總圖</option>
 		  <option value="社科">社科</option>
 		</select>
 		<input type="submit" value="Submit">
-		<button onclick="location.href='{% url "accounts:signup" %}'" type="button">新增地點</button>
-		<input type="submit" value="add">
+		<button onclick="location.href='{% url 'place' %}'" type="button">新增地點</button>
 	</form>
 		<div class="container">
 			<!-- My Event -->
-				<div class="col-md-12">
-									
-							
-						<div class="col-md-6">
-							<br><br><br>
-							<!-- <h3> Hi! {{request.user}}</h3>	 -->
-							<p>我提供的食物</p>
-							<br>
-								{% for food in foodevents %}
-									{% if request.user.username == food.provider.username %}	
-								
-									{% csrf_token %}
-									<div class = "events">
-										名稱：{{food.resource}} <br>
-										地點：{{food.place}} <br>
-										敘述：{{food.description}} <br>
-										發布時間：{{food.time}} <br>
-										剩餘數量：{{food.amount}} <br> 
-										已排數量：{{food.pai_amount}} <br>  
-										提供者：{{food.provider}} <br> 
-
-									</div>
-									
-									<div class="row form-group">
-								        <div class="col-sm-12 text-center">
-											<form action="" method="post">
-											{% csrf_token %}
-												<!-- <input type="hidden" class="btn btn-default" name = "fid" value = {{food.id}} ></input> -->
-												<input id = "edit_amount" type="text" name = "edit_amount" value="修改剩餘數量"></input>
-												<button type="submit" class="btn btn-default" name = "fid" value = {{food.id}} >確認</button>
-											</form><br><br><br>
-											<h3>排隊情形：</h3><br>
-											{% for tkf in take_food %}
-											{% if tkf.food.id == food.id %}
-											
-
-											<div class = "take_food_info">
-												
-												排隊者：{{tkf.taker.username}}<br>
-												預計抵達時間：{{tkf.exp_time}}<br>
-												
-											</div><br>
-
-											{% endif %}
-											{% endfor %}
-											<div class = "finish">
-												<form action="" method="post">
-													{% csrf_token %}
-												    <button type="submit" class="btn btn-default" name = "finish" value = {{food.id}} >發完了</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								
-
-								{% endif %}
-								{% endfor %}
-
-						</div>
-				
-				<!-- Others' events  -->
-
-
-		
-					<div class="col-md-6">
-						
-						<br><br><br>	
-						<p>看看現在有哪些美食</p>
-						<br>
-						{% for food in foodevents %}
-						<!-- {% if request.user.username != food.provider.username %} -->
-						<form action="" method="post">
+			<div class="col-md-12">		
+				<div class="col-md-6">
+					<br><br><br>
+					<!-- <h3> Hi! {{request.user}}</h3>	 -->
+					<p>我提供的食物</p>
+					<br>
+					{% for food in foodevents %}
+						{% if request.user.username == food.provider.username %}	
 							{% csrf_token %}
 							<div class = "events">
 								名稱：{{food.resource}} <br>
@@ -128,26 +65,78 @@
 								敘述：{{food.description}} <br>
 								發布時間：{{food.time}} <br>
 								剩餘數量：{{food.amount}} <br> 
-								經度：{{food.lon}} <br> 
-								已排數量：{{food.pai_amount}} <br> 
+								已排數量：{{food.pai_amount}} <br>  
 								提供者：{{food.provider}} <br> 
 							</div>
-
-								
 							<div class="row form-group">
-								<div class="col-sm-12 text-center">
-									<label for="exp_time">預計幾分鐘後領取：</label> 
-									<input id = "exp_time" type="text" name = "expected_time" value="ex: 20"></input>
-									<button type="submit" class="btn btn-default" name = "pai" value = {{food.id}} >排</button>
+						        <div class="col-sm-12 text-center">
+									<form action="" method="post">
+									{% csrf_token %}
+										<!-- <input type="hidden" class="btn btn-default" name = "fid" value = {{food.id}} ></input> -->
+										<input id = "edit_amount" type="text" name = "edit_amount" value="修改剩餘數量"></input>
+										<button type="submit" class="btn btn-default" name = "fid" value = {{food.id}} >確認</button>
+									</form><br><br><br>
+									
+									<h3>排隊情形：</h3><br>
+									{% for tkf in take_food %}
+										{% if tkf.food.id == food.id %}
+										<div class = "take_food_info">
+											<form action="" method="post">
+												排隊者：{{tkf.taker.username}}<br>
+												預計抵達時間：{{tkf.exp_time}}<br>
+												<button type="submit" class="btn btn-default" name = "taken_food" value = {{tkf.id}} >已領取</button>
+											</form>
+										</div><br>
+										{% endif %}
+									{% endfor %}
+									
+									<div class = "finish">
+										<form action="" method="post">
+											{% csrf_token %}
+										    <button type="submit" class="btn btn-default" name = "finish" value = {{food.id}} >發完了</button>
+										</form>
+									</div>
 								</div>
-							</div>
-						</form>
-						<!-- {% endif %} -->
-						{% endfor %}
-					</div>
-				</div>			
-						
+							</div>			
+						{% endif %}
+					{% endfor %}
 
+				</div>
+				
+		
+				<div class="col-md-6">
+					
+					<br><br><br>	
+					<p>看看現在有哪些美食</p>
+					<br>
+					{% for food in foodevents %}
+					<!-- {% if request.user.username != food.provider.username %} -->
+					<form action="" method="post">
+						{% csrf_token %}
+						<div class = "events">
+							名稱：{{food.resource}} <br>
+							地點：{{food.place}} <br>
+							敘述：{{food.description}} <br>
+							發布時間：{{food.time}} <br>
+							剩餘數量：{{food.amount}} <br> 
+							經度：{{food.lon}} <br> 
+							已排數量：{{food.pai_amount}} <br> 
+							提供者：{{food.provider}} <br> 
+						</div>
+
+							
+						<div class="row form-group">
+							<div class="col-sm-12 text-center">
+								<label for="exp_time">預計幾分鐘後領取：</label> 
+								<input id = "exp_time" type="text" name = "expected_time" value="ex: 20"></input>
+								<button type="submit" class="btn btn-default" name = "pai" value = {{food.id}} >排</button>
+							</div>
+						</div>
+					</form>
+					<!-- {% endif %} -->
+					{% endfor %}
+				</div>
+			</div>			
 		</div>
 	</section>
 </body>
