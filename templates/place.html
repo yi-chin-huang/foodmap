@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-4 col-md-offset-4">
+	<div id = 'form'>
+		<form action="" method="post" class = "create_place">
+    		<input id = "place" type="text" name = "food_place" value="地點"></input>
+
+{% endblock %}
+<script>
+      var map;
+      var marker;
+      var infowindow;
+      var messagewindow;
+
+      function initMap() {
+        var california = {lat: 25.018, lng: 121.53};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: california,
+          zoom: 16
+        });
+
+        infowindow = new google.maps.InfoWindow({
+          content: document.getElementById('form')
+        });
+
+        messagewindow = new google.maps.InfoWindow({
+          content: document.getElementById('message')
+        });
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map
+          });
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        document.getElementById("lng").value = lng;
+        document.getElementById("lat").value = lat;
+
+
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+
+          google.maps.event.addListener(marker, 'dbclick', function() {
+            messagewindow.open(map, marker);
+          });
+        });
+
+      }
+      
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsT6C95O8HJD9CYqz8qOY8WYBc26RKPEA&callback=initMap">
+    </script>
