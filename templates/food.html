@@ -37,10 +37,10 @@
 	<h2>where are you?</h2>
 	<form action="" method="post">
 	{% csrf_token %}
+		<select name="myplace">
 		{% for place in all_place %}
 			<option value="{{ place.place }}"> {{ place.place }} </option>
 		{% endfor %}
-		<select name="myplace">
 		  <option value="新體">新體</option>
 		  <option value="管院">管院</option>
 		  <option value="社科">社科</option>
@@ -85,9 +85,9 @@
 												{% csrf_token %}
 												排隊者：{{tkf.taker.username}}<br>
 												預計抵達時間：{{tkf.exp_time}}<br>
-	
+												{% if tkf.rating == -1 %}
 													<button type="submit" class="btn btn-default" name = "taken_food" value = {{tkf.id}} >已領取</button>
-									
+												{% endif %}
 												{% if tkf.rating != -1 %}
 													完成領取<br>
 													分數：{{tkf.rating}}

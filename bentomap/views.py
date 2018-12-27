@@ -53,10 +53,9 @@ def food(request):
 		for i in unsort_foodevents:
 			dist.append(count_dis(i.lon,i.lat,place.lon,place.lat))
 		foodevents = [x for _,x in sorted(zip(dist,unsort_foodevents))]
-		all_place = Place.objects.all()
 	else:
 		foodevents = FoodEvent.objects.all().order_by('id')	
-
+	all_place = Place.objects.all()
 
 	# all_place = Place.objects.all()
 	if "pai" in request.POST:
