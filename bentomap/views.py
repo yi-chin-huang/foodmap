@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from foodevent.models import FoodEvent, Place, TakeFood
 from django.contrib.auth.decorators import login_required
 import math
+import pytz
 
 # @login_required
 def home(request):
@@ -58,7 +59,7 @@ def food(request):
 
 	my_food = FoodEvent.objects.filter(provider = request.user)
 	take_food = TakeFood.objects.filter(food__in = my_food)
-	all_place = Place.objects.all()
+	# all_place = Place.objects.all()
 	if "pai" in request.POST:
 		taker = request.user
 		foodid = request.POST['pai']
@@ -66,6 +67,7 @@ def food(request):
 		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
 		exp_time = datetime.now() + timedelta(minutes = int(request.POST['expected_time']))
+		print("pai exptime: ", exp_time)
 		TakeFood.objects.create(taker = taker, food = food, exp_time = exp_time)
 
 	if "finish" in request.POST:
@@ -77,8 +79,20 @@ def food(request):
 		FoodEvent.objects.filter(id = fid).update(amount = new_amount)
 	if "taken_food" in request.POST:
 		taken_foodid = request.POST['taken_food']
-		taken_time = datetime.now()
-		if taken_time
+		taken_time = datetime.now().replace(tzinfo=pytz.UTC)
+		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time
+		print(taken_time - exp_taken_time)
+		if taken_time <= exp_taken_time:
+			rating = 10
+		# else:
+		# 	rating = taken_time - exp_taken_time.d.Ticks
+		print("now ", taken_time)
+		print("exp ", exp_taken_time)
+		print("delta: ", ((exp_taken_time - taken_time).seconds))
+		print("delta/60: ", ((exp_taken_time - taken_time).seconds)/60)
+		# print(timedelta(taken_time - exp_taken_time))
+
+
 
 
 	return render(request, 'food.html', locals())

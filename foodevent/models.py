@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.conf import settings
 
 class FoodEvent(models.Model):
-	place = models.CharField(max_length=64)
+	place = models.CharField(max_length=64,blank = True)
 	resource = models.CharField(max_length=64)
 	description = models.CharField(max_length=128)
 	amount = models.IntegerField(default = 0)
@@ -19,7 +19,7 @@ class FoodEvent(models.Model):
 	def __str__(self):
 		return self.place + " " + self.resource
 class Place(models.Model):
-	place = models.CharField(max_length=64)
+	place = models.CharField(max_length=64,blank = True)
 	lon = models.FloatField(default = 25.017350,blank = True)
 	lat = models.FloatField(default = 121.539794,blank = True)
 
