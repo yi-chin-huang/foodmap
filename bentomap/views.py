@@ -57,8 +57,7 @@ def food(request):
 	else:
 		foodevents = FoodEvent.objects.all().order_by('id')	
 
-	my_food = FoodEvent.objects.filter(provider = request.user)
-	take_food = TakeFood.objects.filter(food__in = my_food)
+
 	# all_place = Place.objects.all()
 	if "pai" in request.POST:
 		taker = request.user
@@ -66,8 +65,7 @@ def food(request):
 		food = FoodEvent.objects.get(id = foodid)
 		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
-		exp_time = (datetime.now() + timedelta(minutes = int(request.POST['expected_time']))).replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Taipei'))
-		# print("pai exptime: ", exp_time)
+		exp_time = (datetime.now() + timedelta(minutes = int(request.POST['expected_time'])))
 		TakeFood.objects.create(taker = taker, food = food, exp_time = exp_time)
 
 	if "finish" in request.POST:
@@ -77,15 +75,24 @@ def food(request):
 		fid = request.POST['fid']
 		new_amount = request.POST['edit_amount']
 		FoodEvent.objects.filter(id = fid).update(amount = new_amount)
+
+	my_food = FoodEvent.objects.filter(provider = request.user)
+	take_food = TakeFood.objects.filter(food__in = my_food).order_by('exp_time')
+
 	if "taken_food" in request.POST:
 		taken_foodid = request.POST['taken_food']
-		taken_time = datetime.now().replace(tzinfo=pytz.UTC)
-		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time.replace(tzinfo=pytz.UTC)
+		taken_time = datetime.now().astimezone(pytz.timezone('Asia/Taipei'))
+		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Taipei'))
 		print(taken_time - exp_taken_time)
 		if taken_time <= exp_taken_time:
 			rating = 10
 		else:
 			rating = max(0,10-((taken_time - exp_taken_time).seconds/60)//5)
+			print("taken: ", taken_time)
+			print("exp: ", exp_taken_time)
+			print("delta: ", (taken_time - exp_taken_time).seconds/3600)
+			# print((taken_time - exp_taken_time).seconds/60)
+			print((taken_time - exp_taken_time).seconds/60)
 
 		TakeFood.objects.filter(id = taken_foodid).update(rating = rating)
 
