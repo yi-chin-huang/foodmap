@@ -28,9 +28,14 @@ class TakeFood(models.Model):
 	taker = models.ForeignKey(User, on_delete=models.CASCADE, blank = False)
 	food = models.ForeignKey(FoodEvent, on_delete=models.CASCADE,default=1)
 	exp_time = models.DateTimeField(default=datetime.now, blank=True)
-	rating = models.IntegerField(default = 0) # late: -1 points per 5 mins
+	rating = models.IntegerField(default = -1) # late: -1 points per 5 mins
 
 	def __str__(self):
 		return self.taker + "will take "+ self.food + " at " + self.time
 
  
+# class User(models.Model):
+# 	username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+# 	rating = models.IntegerField(default = 0)
+# 	def __str__(self):
+# 		return self.username + " " + self.password
