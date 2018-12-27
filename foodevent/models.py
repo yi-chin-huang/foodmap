@@ -19,7 +19,7 @@ class FoodEvent(models.Model):
 	def __str__(self):
 		return self.place + " " + self.resource
 class Place(models.Model):
-	name = models.CharField(max_length=64)
+	place = models.CharField(max_length=64)
 	lon = models.FloatField(default = 25.017350,blank = True)
 	lat = models.FloatField(default = 121.539794,blank = True)
 

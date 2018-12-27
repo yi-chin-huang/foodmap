@@ -38,14 +38,15 @@
 	<form action="" method="post">
 	{% csrf_token %}
 		<select name="myplace">
+		  {% for place in all_place %}
+		  <option value="{{ place.place }}"> {{ place.place }} </option>
+		  {% endfor %}
 		  <option value="新體">新體</option>
 		  <option value="管院">管院</option>
-		  <option value="總圖">總圖</option>
 		  <option value="社科">社科</option>
 		</select>
 		<input type="submit" value="Submit">
-		<button onclick="location.href='{% url "accounts:signup" %}'" type="button">新增地點</button>
-		<input type="submit" value="add">
+		<button onclick="location.href='{% url 'place' %}'" type="button">新增地點</button>
 	</form>
 		<div class="container">
 			<!-- My Event -->
