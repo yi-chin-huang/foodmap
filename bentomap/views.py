@@ -84,8 +84,8 @@ def food(request):
 		print(taken_time - exp_taken_time)
 		if taken_time <= exp_taken_time:
 			rating = 10
-		# else:
-		# 	rating = taken_time - exp_taken_time.d.Ticks
+		else:
+			rating = max(0,(taken_time - exp_taken_time).seconds/60)
 		print("now ", taken_time)
 		print("exp ", exp_taken_time)
 		print("delta: ", ((exp_taken_time - taken_time).seconds))
