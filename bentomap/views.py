@@ -36,6 +36,7 @@ def count_dis(base_lng, base_lat, lng, lat):
     return c * r 
 # @login_required(login_url='/accounts/')
 def food(request):
+	# food = FoodEvent.objects.get(id = foodid)	
 	if "myplace" in request.POST:
 		myplace = request.POST['myplace']
 		if myplace == "新體":
@@ -51,6 +52,10 @@ def food(request):
 		foodevents = [x for _,x in sorted(zip(dist,unsort_foodevents))]
 	else:
 		foodevents = FoodEvent.objects.all().order_by('id')	
+
+	my_food = FoodEvent.objects.filter(provider = request.user)
+	take_food = TakeFood.objects.filter(food__in = my_food)
+
 	if "pai" in request.POST:
 		taker = request.user
 		foodid = request.POST['pai']

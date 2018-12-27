@@ -41,11 +41,18 @@
 				  	{% endif %}
 				  	<input type="submit" value="Login">
 				  </form>
-
-				  <form class="site-form" action="" method="post">
-				  	{% csrf_token %}
-				  		<input type="submit" name="logout" value="Logout">
-				  </form>
+				  {% if user.is_authenticated %}
+			        <center>
+			            <p style="font-size:13pt">Hi {{ user.username }}!
+			            <button onclick="location.href='/accounts/logout'">Logout</button>
+			            </p>
+			        </center>
+			    {% else %}
+			        <center>
+			        <p style="font-size:13pt">You are not logged in.
+			           <!--  <button onclick="location.href='/accounts/login'">Login</button></p> -->
+			        </center>
+			    {% endif %}
 
 				  <div class="signup-btn">
 				  	<button onclick="location.href='{% url "accounts:signup" %}'" type="button">Create An Account</button>
