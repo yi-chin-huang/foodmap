@@ -8,7 +8,7 @@ from foodevent.models import FoodEvent, Place, TakeFood
 from django.contrib.auth.decorators import login_required
 import math
 import pytz
-
+local_tz = pytz.timezone('Asia/Taipei')
 # @login_required
 def home(request):
 	if "create_event" in request.POST:
@@ -55,7 +55,8 @@ def food(request):
 		foodevents = [x for _,x in sorted(zip(dist,unsort_foodevents))]
 		all_place = Place.objects.all()
 	else:
-		foodevents = FoodEvent.objects.all().order_by('id')	
+		foodevents = FoodEvent.objects.all().order_by('id')
+		all_place = Place.objects.all()	
 
 	my_food = FoodEvent.objects.filter(provider = request.user)
 	take_food = TakeFood.objects.filter(food__in = my_food)
@@ -66,8 +67,8 @@ def food(request):
 		food = FoodEvent.objects.get(id = foodid)
 		foodamount = food.pai_amount
 		FoodEvent.objects.filter(id = foodid).update(pai_amount = foodamount + 1)
-		exp_time = (datetime.now() + timedelta(minutes = int(request.POST['expected_time']))).replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Taipei'))
-		# print("pai exptime: ", exp_time)
+		exp_time = (datetime.now() + timedelta(minutes = int(request.POST['expected_time'])))
+		# print("pai exptime: ", exp_timeb)
 		TakeFood.objects.create(taker = taker, food = food, exp_time = exp_time)
 
 	if "finish" in request.POST:
@@ -79,13 +80,14 @@ def food(request):
 		FoodEvent.objects.filter(id = fid).update(amount = new_amount)
 	if "taken_food" in request.POST:
 		taken_foodid = request.POST['taken_food']
-		taken_time = datetime.now().replace(tzinfo=pytz.UTC)
-		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time.replace(tzinfo=pytz.UTC)
+		taken_time = datetime.now().astimezone(local_tz)
+		exp_taken_time = TakeFood.objects.get(id = taken_foodid).exp_time.replace(tzinfo=pytz.utc).astimezone(local_tz)
 		print(taken_time - exp_taken_time)
 		if taken_time <= exp_taken_time:
 			rating = 10
 		else:
-			rating = max(0,10-((taken_time - exp_taken_time).seconds/60)//5)
+			rating = (max(0,10-(((taken_time - exp_taken_time).seconds))/60//5))
+			print("exp",exp_taken_time)
 
 		TakeFood.objects.filter(id = taken_foodid).update(rating = rating)
 

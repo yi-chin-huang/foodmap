@@ -26,6 +26,7 @@
 	        <li><a href="#map-section" class="page-scroll">Map</a></li>
 	        <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
 	        <li><a href="/accounts/" class="page-scroll">Account</a></li>
+	        <li><a href="/accounts/profile/" class="page-scroll">profile</a></li>
 	        <li><a href="" class="page-scroll">Contact us</a></li>
 	      </ul>
 	    </div>
@@ -37,16 +38,16 @@
 	<h2>where are you?</h2>
 	<form action="" method="post">
 	{% csrf_token %}
-		{% for place in all_place %}
-			<option value="{{ place.place }}"> {{ place.place }} </option>
-		{% endfor %}
 		<select name="myplace">
+		{% for place in all_place %}
+		  <option value="{{ place.place }}"> {{ place.place }} </option>
+		{% endfor %}
 		  <option value="新體">新體</option>
 		  <option value="管院">管院</option>
 		  <option value="社科">社科</option>
 		</select>
-		<input type="submit" value="Submit">
-		<button onclick="location.href='{% url 'place' %}'" type="button">新增地點</button>
+		<span><input type="submit" value="I'm here"></span>
+		<button class="btn btn-default" onclick="location.href='{% url 'place' %}'" type="button">新增地點</button>
 	</form>
 		<div class="container">
 			<!-- My Event -->
