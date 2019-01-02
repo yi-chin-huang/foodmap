@@ -113,10 +113,10 @@ def place(request):
 		place = request.POST['myplace']
 		lng = request.POST['lng']
 		lat = request.POST['lat']
-		if Place.objects.filter(place=place) == []:
-			Place.objects.create(place=place,lon=lng,lat=lat)
-		else:
+		if len(Place.objects.filter(place=place)) != 0:
 			Place.objects.get(place=place)
+		else:
+			Place.objects.create(place=place,lon=lng,lat=lat)
 		all_place = Place.objects.all()
 		return redirect('/food/')
 	return render(request, 'place.html', locals())
