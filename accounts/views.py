@@ -57,7 +57,7 @@ def profile(request):
                 mytake.append(his)
                 rat = rat+his.rating
         if len(mytake) != 0:
-            rat = rat/len(mytake)
+            rat = rat/(len(mytake)+1)
         User_extend.objects.filter(user=user).update(rating=rat)
     return render(request,"accounts/profile.html",locals())
 
