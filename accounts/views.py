@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from foodevent.models import FoodEvent, Place, TakeFood
 from accounts.models import User_extend
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def signup_view(request):
     if request.method == 'POST':
@@ -35,7 +36,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('../')
-
+@login_required(login_url='/accounts/')
 def profile(request):
     if request.user.is_authenticated:
         name = request.user.username
@@ -43,7 +44,7 @@ def profile(request):
         try:
             new_user = User_extend.objects.get(user=user)
         except:
-            new_user = User_extend.objects.create(user=user,rating=10)
+            new_user = User_extend.objects.create(user=user,rating=0)
         history = TakeFood.objects.all()
         myhis = []
         mytake = []
@@ -55,8 +56,8 @@ def profile(request):
             if his.taker == request.user:
                 mytake.append(his)
                 rat = rat+his.rating
-        print(rat,"len",len(mytake))
-        rat = rat/max(1,len(mytake))
+        if len(mytake) != 0:
+            rat = rat/len(mytake)
         User_extend.objects.filter(user=user).update(rating=rat)
     return render(request,"accounts/profile.html",locals())
 

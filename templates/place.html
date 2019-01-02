@@ -16,6 +16,10 @@
        * element that contains the map. */
       #map {
         height: 100%;
+        width: 90%;
+        margin-left: 10px;
+        position: fixed;
+        margin: auto;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -42,12 +46,17 @@
           <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
           <li><a href="/accounts/" class="page-scroll">Account</a></li>
           <li><a href="/accounts/profile/" class="page-scroll">profile</a></li>
-          <li><a href="" class="page-scroll">Contact us</a></li>
+          {% if user.is_authenticated %}
+           <li> <h5 style= "margin-top: 17px;">Hi {{ user.username }}</h5></li>
+      {% else %}
+              
+              <li><h5 style= "margin-top: 17px;">You are not logged in</h5></li>
+              
+      {% endif %}
         </ul>
       </div>
     </div>
   </nav>
-  <br><br><br><br><br><br><br>
   <h1></h1>
   <div class="container">
         <div class="row">
@@ -55,7 +64,7 @@
             	<div id = 'form'>
             		<form action="" method="post" class = "create_place">
                   {% csrf_token %}
-                		<input id = "place" type="text" name = "myplace" value="地點"></input>
+                		<input id = "place" type="text" name = "myplace" value="填入新增地名"></input>
                     <input id = "lng" type="hidden" name = "lng" value="經度"></input>
                     <input id = "lat" type="hidden" name = "lat" value="緯度"></input>
                     <input type="submit" name = "create_place" value="送出"></input>
@@ -64,6 +73,12 @@
             </div>
         </div>
   </div>
+  <br><br><br>
+  <div class= "word_line">
+      <h3>標示你的位置，可以更方便地找到附近的美食喔</h3>
+      <h3>點擊下方地圖，即可新增你的位置喔</h3>
+  </div>
+  
   <div id="map"></div>
 
 <script>
@@ -73,7 +88,7 @@
       var messagewindow;
 
       function initMap() {
-        var california = {lat: 25.018, lng: 121.53};
+        var california = {lat: 25.018344, lng: 121.538129};
         map = new google.maps.Map(document.getElementById('map'), {
           center: california,
           zoom: 16

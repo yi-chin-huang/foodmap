@@ -26,15 +26,22 @@
 	        <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
 	        <li><a href="/accounts/" class="page-scroll">Account</a></li>
 	        <li><a href="/accounts/profile/" class="page-scroll">profile</a></li>
-	        <li><a href="" class="page-scroll">Contact us</a></li>
+	        {% if user.is_authenticated %}
+			     <li> <h5 style= "margin-top: 17px;">Hi {{ user.username }}</h5></li>
+			{% else %}
+			        
+			        <li><h5 style= "margin-top: 17px;">You are not logged in</h5></li>
+			        
+			{% endif %}
+	       
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
-	<section id="map-section" class="text-center">
+	<section id="map-section">
 		<div class="container">
 				<h1>Login</h1>
-				  <form class="site-form" action="{% url 'accounts:login' %}" method="post">
+				  <form action="{% url 'accounts:login' %}" method="post" >
 				  	{% csrf_token %}
 				  		{{ form }}
 				  	{% if request.GET.next %}
@@ -42,19 +49,9 @@
 				  	{% endif %}
 				  	<input type="submit" value="Login">
 				  </form>
-				  {% if user.is_authenticated %}
-			        <center>
-			            <p style="font-size:13pt">Hi {{ user.username }}!
-			            <button onclick="location.href='/accounts/logout'">Logout</button>
-			            </p>
-			        </center>
-			    {% else %}
-			        <center>
-			        <p style="font-size:13pt">You are not logged in.
-			           <!--  <button onclick="location.href='/accounts/login'">Login</button></p> -->
-			        </center>
-			    {% endif %}
-
+				  <br> <br>
+				  <button onclick="location.href='/accounts/logout'">Logout</button>
+			     <br> <br>
 				  <div class="signup-btn">
 				  	<button onclick="location.href='{% url "accounts:signup" %}'" type="button">Create An Account</button>
 				  </div>

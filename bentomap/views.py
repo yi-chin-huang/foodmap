@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 import math
 import pytz
 local_tz = pytz.timezone('Asia/Taipei')
-# @login_required
+@login_required(login_url='/accounts/')
 def home(request):
 	if "create_event" in request.POST:
 		place = request.POST['food_place']
@@ -35,7 +35,7 @@ def count_dis(base_lng, base_lat, lng, lat):
     c = 2 * math.asin(math.sqrt(a))
     r = 6371
     return c * r 
-# @login_required(login_url='/accounts/')
+@login_required(login_url='/accounts/')
 def food(request):
 	# food = FoodEvent.objects.get(id = foodid)	
 	if "myplace" in request.POST:
@@ -99,7 +99,7 @@ def food(request):
 
 	return render(request, 'food.html', locals())
 
-# @login_required
+@login_required(login_url='/accounts/')
 def index(request):
     # from haversine import haversine
     points_all = FoodEvent.objects.all()
@@ -120,8 +120,12 @@ def place(request):
 		place = request.POST['myplace']
 		lng = request.POST['lng']
 		lat = request.POST['lat']
-		Place.objects.create(place=place,lon=lng,lat=lat)
+		if Place.objects.filter(place=place) != []:
+			Place.objects.create(place=place,lon=lng,lat=lat)
+		else:
+			Place.objects.get(place=place)
 		all_place = Place.objects.all()
+		return redirect('/food/')
 	return render(request, 'place.html', locals())
 
 

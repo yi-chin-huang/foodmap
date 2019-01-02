@@ -18,6 +18,7 @@
     .box{
       width: 42%;
       padding: 10px;
+      padding-left: 2.5%;
       border: 2px solid gray;
       margin: 0;
       display: inline-block;
@@ -29,20 +30,21 @@
       height: 200px;
       width: 100%;
       background-size: contain;
-      background-color: rgb(255, 204, 152,0.2);;
+      background-color: white;
       z-index:-1!important;
     }
 
     .myprofile img {
       width: 150px;
       height: 150px;
-      border-radius: 10%;
+      /*border-radius: 10%;*/
       padding: 0.2rem;
       margin: 20px;
       background: white;
-      border:10px;
-      border-style: solid;
+      /*border:10px;*/
+      /*border-style: solid;*/
       display: inline;
+      /*border-color: white;*/
     }
     .myprofile-container {
       background-color: rgba(255,255,255,0.2);
@@ -66,7 +68,13 @@
           <li><a href="{% url 'food' %}" class="page-scroll">Food Event</a></li>
           <li><a href="/accounts/" class="page-scroll">Account</a></li>
           <li><a href="/accounts/profile/" class="page-scroll">profile</a></li>
-          <li><a href="" class="page-scroll">Contact us</a></li>
+          {% if user.is_authenticated %}
+           <li> <h5 style= "margin-top: 17px;">Hi {{ user.username }}</h5></li>
+      {% else %}
+              
+              <li><h5 style= "margin-top: 17px;">You are not logged in</h5></li>
+              
+      {% endif %}
         </ul>
       </div>
     </div>
@@ -76,9 +84,9 @@
         <div class = "myprofile">
               <span><img src="../../static/img/profile.jpg" alt="myprofile" style="float:left;">
                 {% if request.user.is_authenticated %}
-                  &nbsp;&nbsp;<h1>{{user.username}}</h1><br> <h3>Rating:{{new_user.rating}}<h3>
+                  &nbsp;&nbsp;<h2>帳號：{{user.username}}</h2><br> <h3>積分：{{new_user.rating}}<h3>
                 {% else %}
-                 <h1><span>You are not login yet!</h1><br>hhhhhhh</span>
+                 <h1><span>You are not login yet!</h1></span>
                 {% endif %}
               </span>
 
@@ -88,17 +96,17 @@
   <div class="container">
     <div class ="box">
       {% if request.user.is_authenticated %}
-      <h3>who took my food</h3>
+      <h3>我提供的食物</h3>
         {% for his in myhis %}
-          <h5>history record :<br> &nbsp;&nbsp; taker :{{ his.taker}}&nbsp;&nbsp;rating :{{his.rating}}</h5>
+          <h5>歷史紀錄：<br>  領取者：{{ his.taker}}&nbsp;&nbsp;積分：{{his.rating}}</h5>
         {% endfor%}
       {% endif %}
     </div>
     <div class = "box">
       {% if request.user.is_authenticated %}
-      <h3> whose food did I take</h3>
+      <h3>我領取的食物</h3>
         {% for take in mytake %}
-          <h5>history record :<br> &nbsp;&nbsp; provider :{{ take.food.provider}}&nbsp;&nbsp;rating :{{take.rating}}</h5>
+          <h5>歷史紀錄：<br> 提供者：{{ take.food.provider}}&nbsp;&nbsp;積分：{{take.rating}}</h5>
         {% endfor%}
       {% endif %}
     </div>

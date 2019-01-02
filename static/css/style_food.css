@@ -298,15 +298,12 @@ form{
 
 }
 .word_line{
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  height: 70px;
-  border-width: 1px;
-  margin-left: 100px;
-  border-color: #92a8d1;
+  text-align:center;
+  width: 70%;
+  height: 40px;
   color: #333333;
+  text-align: justify;
+  text-justify:inter-ideograph;
 }
 .place{
   color: #333333;
