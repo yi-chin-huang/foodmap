@@ -64,7 +64,7 @@
             	<div id = 'form'>
             		<form action="" method="post" class = "create_place">
                   {% csrf_token %}
-                		<input id = "place" type="text" name = "myplace" value="填入新增地名"></input>
+                		<input id = "place" type="text" name = "myplace" placeholder="填入新增地名"></input>
                     <input id = "lng" type="hidden" name = "lng" value="經度"></input>
                     <input id = "lat" type="hidden" name = "lat" value="緯度"></input>
                     <input type="submit" name = "create_place" value="送出"></input>

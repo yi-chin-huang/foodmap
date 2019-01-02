@@ -40,14 +40,7 @@ def food(request):
 	# food = FoodEvent.objects.get(id = foodid)	
 	if "myplace" in request.POST:
 		myplace = request.POST['myplace']
-		if myplace == "新體":
-			place = Place.objects.create(place=myplace,lon=121.535274,lat=25.021981)
-		elif myplace == "社科":
-			place = Place.objects.create(place=myplace,lon=121.542431,lat=25.020963)
-		elif myplace == "管院":
-			place = Place.objects.create(place=myplace,lon=121.543333,lat=25.020953)
-		else:
-			place = Place.objects.get(place = myplace)
+		place = Place.objects.get(place = myplace)
 		unsort_foodevents = FoodEvent.objects.all()
 		dist = []
 		for i in unsort_foodevents:
@@ -123,7 +116,7 @@ def place(request):
 		if Place.objects.filter(place=place) != []:
 			Place.objects.create(place=place,lon=lng,lat=lat)
 		else:
-			Place.objects.get(place=place)
+			Place.objects.get(place=pl)
 		all_place = Place.objects.all()
 		return redirect('/food/')
 	return render(request, 'place.html', locals())
