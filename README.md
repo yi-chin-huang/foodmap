@@ -1,4 +1,4 @@
-# foodmap
+# NTU Remaining Food Map
 
 A website for people to share their remaining food with others.
 
